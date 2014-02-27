@@ -28,6 +28,7 @@
 	// Do any additional setup after loading the view.
 
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dress2.png"]];
+    
     UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.size.width,self.view.frame.size.height));
     CGContextRef context = UIGraphicsGetCurrentContext();
     [self.view.layer renderInContext:context];
@@ -65,11 +66,11 @@
         NSLog(@"x %f, y%f", self.picker.frame.origin.x, self.picker.frame.origin.y);
 
         CGImageRef imageRef = CGImageCreateWithImageInRect([self.screenShot CGImage], clippedRect);
+        
         UIImage *newImage   = [UIImage imageWithCGImage:imageRef];
         self.myImage = newImage;
         self.picker.backgroundColor = [UIColor colorWithPatternImage:newImage];
         self.picker.backgroundColor = [self averageColor];
-
     }
 }
 
@@ -106,30 +107,29 @@
 - (UIColor *)averageColor {
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    unsigned char corppedImage[4 * ClippedImageWidth * ClippedImageHeight];
-    CGContextRef context = CGBitmapContextCreate(corppedImage, ClippedImageWidth, ClippedImageHeight, 8, ClippedImageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    unsigned char croppedImage[4 * ClippedImageWidth * ClippedImageHeight];
+    CGContextRef context = CGBitmapContextCreate(croppedImage, ClippedImageWidth, ClippedImageHeight, 8, ClippedImageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
     CGContextDrawImage(context, CGRectMake(0, 0, ClippedImageWidth, ClippedImageHeight), self.myImage.CGImage);
     CGColorSpaceRelease(colorSpace);
     CGContextRelease(context);
     
-    float averagedAlpha = 0.0;
-    float averagedRed = 0.0;
-    float averagedGreen = 0.0;
-    float averagedBlue = 0.0;
+    float averagedAlphaTotal = 0.0;
+    float averagedRedTotal = 0.0;
+    float averagedGreenTotal = 0.0;
+    float averagedBlueTotal = 0.0;
     
-    for (int i = 0; i < sizeof(corppedImage) / 4; i++) {
-        averagedRed += corppedImage[i * 4];
-        averagedGreen += corppedImage[i * 4 + 1];
-        averagedBlue += corppedImage[i * 4 + 2];
-        averagedAlpha += corppedImage[i * 4 + 3];
+    for (int i = 0; i < sizeof(croppedImage) / 4; i++) {
+        averagedRedTotal += croppedImage[i * 4];
+        averagedGreenTotal += croppedImage[i * 4 + 1];
+        averagedBlueTotal += croppedImage[i * 4 + 2];
+        averagedAlphaTotal += croppedImage[i * 4 + 3];
     }
     
-    
-    return [UIColor colorWithRed:averagedRed / sizeof(corppedImage) * 4 / 255.0
-                           green:averagedGreen / sizeof(corppedImage) * 4 / 255.0
-                            blue:averagedBlue / sizeof(corppedImage) * 4 / 255.0
-                           alpha:averagedAlpha/sizeof(corppedImage)* 4 /255.0];
+    return [UIColor colorWithRed:averagedRedTotal / sizeof(croppedImage) * 4 / 255.0
+                           green:averagedGreenTotal / sizeof(croppedImage) * 4 / 255.0
+                            blue:averagedBlueTotal / sizeof(croppedImage) * 4 / 255.0
+                           alpha:averagedAlphaTotal / sizeof(croppedImage)* 4 /255.0];
     
 }
 
