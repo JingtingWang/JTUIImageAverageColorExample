@@ -10,16 +10,10 @@
 
 @implementation UIImage (averageColor)
 
--(CGSize)mySize
-{
-    return self.size;
-}
-
-
--(UIColor *)imageAverageColor:(CGSize)imageSize {
+-(UIColor *)imageAverageColor {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    int ClippedImageWidth = (int)imageSize.width;
-    int ClippedImageHeight = (int)imageSize.height;
+    int ClippedImageWidth = (int)self.size.width;
+    int ClippedImageHeight = (int)self.size.height;
     
     unsigned char croppedImage[4 * ClippedImageWidth * ClippedImageHeight];
     CGContextRef context = CGBitmapContextCreate(croppedImage, ClippedImageWidth, ClippedImageHeight, 8, ClippedImageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);

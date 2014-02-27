@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (averageColor)
--(CGSize)mySize;
--(UIColor *)imageAverageColor:(CGSize)imageSize;
+-(UIColor *)imageAverageColor;
 @end

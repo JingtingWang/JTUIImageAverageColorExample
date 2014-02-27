@@ -66,7 +66,7 @@
         CGImageRef imageRef = CGImageCreateWithImageInRect([self.screenShot CGImage], clippedRect);
         UIImage *newImage   = [UIImage imageWithCGImage:imageRef];
         
-        self.picker.backgroundColor = [newImage imageAverageColor:[newImage mySize]];
+        self.picker.backgroundColor = [newImage imageAverageColor];
     }
 }
 
