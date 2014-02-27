@@ -9,6 +9,7 @@
 #import "AGViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "UIImage+averageColor.h"
 
 #define ClippedImageWidth  50
 #define ClippedImageHeight 50
@@ -16,7 +17,6 @@
 @interface AGViewController ()
 @property (strong, nonatomic)UIView* picker;
 @property (strong, nonatomic)UIImage* screenShot;
-@property (strong, nonatomic)UIImage* myImage;
 
 @end
 
@@ -63,14 +63,10 @@
     if(pan.state == UIGestureRecognizerStateEnded)
     {
         CGRect clippedRect  = CGRectMake(self.picker.frame.origin.x, self.picker.frame.origin.y, ClippedImageWidth, ClippedImageHeight);
-        NSLog(@"x %f, y%f", self.picker.frame.origin.x, self.picker.frame.origin.y);
-
         CGImageRef imageRef = CGImageCreateWithImageInRect([self.screenShot CGImage], clippedRect);
-        
         UIImage *newImage   = [UIImage imageWithCGImage:imageRef];
-        self.myImage = newImage;
-        self.picker.backgroundColor = [UIColor colorWithPatternImage:newImage];
-        self.picker.backgroundColor = [self averageColor];
+        
+        self.picker.backgroundColor = [newImage imageAverageColor:[newImage mySize]];
     }
 }
 
@@ -82,57 +78,7 @@
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    
     return img;
 }
-
-- (UIImage *)captureView:(UIView *)view withArea:(CGRect)screenRect {
-    
-    UIGraphicsBeginImageContext(screenRect.size);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[UIColor blackColor] set];
-    CGContextFillRect(ctx, screenRect);
-    
-    [view.layer renderInContext:ctx];
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    self.myImage = newImage;
-    return newImage;
-}
-
-
-- (UIColor *)averageColor {
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    unsigned char croppedImage[4 * ClippedImageWidth * ClippedImageHeight];
-    CGContextRef context = CGBitmapContextCreate(croppedImage, ClippedImageWidth, ClippedImageHeight, 8, ClippedImageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    
-    CGContextDrawImage(context, CGRectMake(0, 0, ClippedImageWidth, ClippedImageHeight), self.myImage.CGImage);
-    CGColorSpaceRelease(colorSpace);
-    CGContextRelease(context);
-    
-    float averagedAlphaTotal = 0.0;
-    float averagedRedTotal = 0.0;
-    float averagedGreenTotal = 0.0;
-    float averagedBlueTotal = 0.0;
-    
-    for (int i = 0; i < sizeof(croppedImage) / 4; i++) {
-        averagedRedTotal += croppedImage[i * 4];
-        averagedGreenTotal += croppedImage[i * 4 + 1];
-        averagedBlueTotal += croppedImage[i * 4 + 2];
-        averagedAlphaTotal += croppedImage[i * 4 + 3];
-    }
-    
-    return [UIColor colorWithRed:averagedRedTotal / sizeof(croppedImage) * 4 / 255.0
-                           green:averagedGreenTotal / sizeof(croppedImage) * 4 / 255.0
-                            blue:averagedBlueTotal / sizeof(croppedImage) * 4 / 255.0
-                           alpha:averagedAlphaTotal / sizeof(croppedImage)* 4 /255.0];
-    
-}
-
-// reference http://www.bobbygeorgescu.com/2011/08/finding-average-color-of-uiimage/
 
 @end

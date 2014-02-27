@@ -23,6 +23,7 @@
 		6EA4A76518BDC0CC00BFBCB2 /* corgi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6EA4A76418BDC0CC00BFBCB2 /* corgi.jpg */; };
 		6EA4A76718BDC30A00BFBCB2 /* dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EA4A76618BDC30A00BFBCB2 /* dress.png */; };
 		6EA4A76918BDC3E300BFBCB2 /* dress2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EA4A76818BDC3E300BFBCB2 /* dress2.png */; };
+		6EA4A76C18BFCB3700BFBCB2 /* UIImage+averageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4A76B18BFCB3700BFBCB2 /* UIImage+averageColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		6EA4A76418BDC0CC00BFBCB2 /* corgi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = corgi.jpg; sourceTree = "<group>"; };
 		6EA4A76618BDC30A00BFBCB2 /* dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dress.png; sourceTree = "<group>"; };
 		6EA4A76818BDC3E300BFBCB2 /* dress2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dress2.png; sourceTree = "<group>"; };
+		6EA4A76A18BFCB3700BFBCB2 /* UIImage+averageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+averageColor.h"; sourceTree = "<group>"; };
+		6EA4A76B18BFCB3700BFBCB2 /* UIImage+averageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+averageColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 				6EA4A73218BD5AAE00BFBCB2 /* JTAppDelegate.m */,
 				6EA4A75118BD5AC400BFBCB2 /* AGViewController.h */,
 				6EA4A75218BD5AC400BFBCB2 /* AGViewController.m */,
+				6EA4A76A18BFCB3700BFBCB2 /* UIImage+averageColor.h */,
+				6EA4A76B18BFCB3700BFBCB2 /* UIImage+averageColor.m */,
 				6EA4A73418BD5AAE00BFBCB2 /* Images.xcassets */,
 				6EA4A72918BD5AAE00BFBCB2 /* Supporting Files */,
 			);
@@ -260,6 +265,7 @@
 				6EA4A73318BD5AAE00BFBCB2 /* JTAppDelegate.m in Sources */,
 				6EA4A75318BD5AC400BFBCB2 /* AGViewController.m in Sources */,
 				6EA4A72F18BD5AAE00BFBCB2 /* main.m in Sources */,
+				6EA4A76C18BFCB3700BFBCB2 /* UIImage+averageColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +466,7 @@
 				6EA4A74D18BD5AAE00BFBCB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6EA4A74E18BD5AAE00BFBCB2 /* Build configuration list for PBXNativeTarget "averageColorExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +475,7 @@
 				6EA4A75018BD5AAE00BFBCB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
