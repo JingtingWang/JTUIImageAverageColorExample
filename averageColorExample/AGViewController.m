@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#define ClippedImageWidth  50
+#define ClippedImageHeight 50
+
 @interface AGViewController ()
 @property (strong, nonatomic)UIView* picker;
 @property (strong, nonatomic)UIImage* screenShot;
@@ -32,7 +35,7 @@
     self.screenShot = screenShot;
     UIGraphicsEndImageContext();
     
-    self.picker = [[UIView alloc]initWithFrame:CGRectMake(70, 150, 50, 50)];
+    self.picker = [[UIView alloc]initWithFrame:CGRectMake(70, 150, ClippedImageWidth, ClippedImageHeight)];
     [self.view addSubview:self.picker];
     self.picker.backgroundColor = [UIColor clearColor];
     self.picker.layer.borderColor = [[UIColor blueColor]CGColor];
@@ -58,7 +61,7 @@
     
     if(pan.state == UIGestureRecognizerStateEnded)
     {
-        CGRect clippedRect  = CGRectMake(self.picker.frame.origin.x, self.picker.frame.origin.y, 50, 50);
+        CGRect clippedRect  = CGRectMake(self.picker.frame.origin.x, self.picker.frame.origin.y, ClippedImageWidth, ClippedImageHeight);
         NSLog(@"x %f, y%f", self.picker.frame.origin.x, self.picker.frame.origin.y);
 
         CGImageRef imageRef = CGImageCreateWithImageInRect([self.screenShot CGImage], clippedRect);
@@ -103,10 +106,10 @@
 - (UIColor *)averageColor {
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    unsigned char corppedImage[4 * 50 * 50];
-    CGContextRef context = CGBitmapContextCreate(corppedImage, 50, 50, 8, 50 * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    unsigned char corppedImage[4 * ClippedImageWidth * ClippedImageHeight];
+    CGContextRef context = CGBitmapContextCreate(corppedImage, ClippedImageWidth, ClippedImageHeight, 8, ClippedImageWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
-    CGContextDrawImage(context, CGRectMake(0, 0, 50, 50), self.myImage.CGImage);
+    CGContextDrawImage(context, CGRectMake(0, 0, ClippedImageWidth, ClippedImageHeight), self.myImage.CGImage);
     CGColorSpaceRelease(colorSpace);
     CGContextRelease(context);
     
@@ -126,7 +129,7 @@
     return [UIColor colorWithRed:averagedRed / sizeof(corppedImage) * 4 / 255.0
                            green:averagedGreen / sizeof(corppedImage) * 4 / 255.0
                             blue:averagedBlue / sizeof(corppedImage) * 4 / 255.0
-                           alpha:1.0];
+                           alpha:averagedAlpha/sizeof(corppedImage)* 4 /255.0];
     
 }
 
