@@ -10,4 +10,5 @@
 
 @interface UIImage (averageColor)
 -(UIColor *)imageAverageColor;
+-(UIImage*)clippedImageWithRect:(CGRect)rect;
 @end

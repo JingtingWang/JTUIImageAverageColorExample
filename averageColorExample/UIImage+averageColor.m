@@ -42,6 +42,12 @@
     
 }
 
+-(UIImage*)clippedImageWithRect:(CGRect)rect
+{
+    CGRect clippedRect  = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], clippedRect);
+    return [UIImage imageWithCGImage:imageRef];
+}
 
 // reference http://www.bobbygeorgescu.com/2011/08/finding-average-color-of-uiimage/
 @end

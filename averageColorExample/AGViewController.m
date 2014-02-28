@@ -63,8 +63,7 @@
     if(pan.state == UIGestureRecognizerStateEnded)
     {
         CGRect clippedRect  = CGRectMake(self.picker.frame.origin.x, self.picker.frame.origin.y, ClippedImageWidth, ClippedImageHeight);
-        CGImageRef imageRef = CGImageCreateWithImageInRect([self.screenShot CGImage], clippedRect);
-        UIImage *newImage   = [UIImage imageWithCGImage:imageRef];
+        UIImage* newImage   = [self.screenShot clippedImageWithRect:clippedRect];
         
         self.picker.backgroundColor = [newImage imageAverageColor];
     }
